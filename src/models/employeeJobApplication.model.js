@@ -33,5 +33,5 @@ const EmployeeJobApplicationModelSchema = mongoose.Schema({
     }
 });
 
-const EmployeeJobApplicationModel = mongoose.model("employee", EmployeeJobApplicationModelSchema);
+const EmployeeJobApplicationModel = mongoose.model("employeejobapplication", EmployeeJobApplicationModelSchema);
 module.exports = EmployeeJobApplicationModel;
