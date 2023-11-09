@@ -3,7 +3,7 @@ const mongoose=require("mongoose");
 const cors = require("cors");
 mongoose.set("strictQuery",true);
 
-const UserModel= require('./models/Signup')
+const UserModel= require('./src/models/Signup')
 const app=express();
 app.use(express.json());
 app.use(cors());
