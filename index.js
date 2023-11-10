@@ -11,6 +11,7 @@ app.use(cors());
 
 const UserModel = require("./src/models/user.model");
 const JobModel = require("./src/models/job.model");
+const EmployerModel = require("./src/models/employer.model");
 
 mongoose.connect("mongodb+srv://test:123@cluster0.3hhy1wv.mongodb.net/jobnest");
 
@@ -58,6 +59,14 @@ app.post("/post_job", upload.none(), (req, res) => {
 app.get("/get_jobs", (req, res) => {
   JobModel.find({})
     .then((jobs) => res.json(jobs))
+    .catch((err) => res.json(err));
+});
+
+app.post("/post_employer_details", upload.none(), (req, res) => {
+  const data = req.body;
+  console.log(data);
+  EmployerModel.create(data)
+    .then((response) => res.json(response))
     .catch((err) => res.json(err));
 });
 

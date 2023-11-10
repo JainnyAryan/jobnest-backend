@@ -8,6 +8,7 @@ const JobModelSchema = new mongoose.Schema({
   salary: String,
   roleDescription: String,
   iconUrl: String,
+  employer: mongoose.Schema.Types.Mixed,
 });
 
 const JobModel = mongoose.model("job", JobModelSchema);
