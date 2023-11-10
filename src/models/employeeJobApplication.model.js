@@ -4,7 +4,6 @@ const EmployeeJobApplicationModelSchema = mongoose.Schema({
     personal:{
         name: String,
         email: String,
-
         phone: String,
         dob: String,
         gender: String,
