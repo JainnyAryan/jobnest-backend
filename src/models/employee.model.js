@@ -1,33 +1,25 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const EmployeeModelSchema = mongoose.Schema({
-    personal:{
-        phone: String,
-        dob: String,
-        gender: String,
-        description: String,
-    },
-    educational:{
-        college: String,
-        stream: String,
-        cgpa: String,
-        school: String,
-        highSchool: String,
-        intermediateSchool: String,
-    },
-    experience:{
-        organisation: String,
-        duration: String,
-        role: String,
-        roleDescription: String,
-    },
-    achievements: {
-        awards: String,
-        certifications: String,
-    },
-    resume: {
-        link: String,
-    }
+  phone: String,
+  dob: String,
+  gender: String,
+  description: String,
+
+  collegeName: String,
+  collegeStream: String,
+  cgpa: String,
+  schoolName: String,
+  intermediateSchoolPercentage: String,
+  highSchoolPercentage: String,
+
+  organisation: String,
+  workDuration: String,
+  role: String,
+  roleDescription: String,
+
+  awards: String,
+  certifications: String,
 });
 
 const EmployeeModel = mongoose.model("employee", EmployeeModelSchema);
