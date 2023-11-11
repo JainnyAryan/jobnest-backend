@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 
-const EmployeeModelSchema = mongoose.Schema({
+const EmployeeModelSchema = new mongoose.Schema({
+  userId: String,
+
   phone: String,
   dob: String,
   gender: String,

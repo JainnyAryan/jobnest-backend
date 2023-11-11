@@ -25,7 +25,12 @@ const EmployeeJobApplicationModelSchema = new mongoose.Schema({
 
   resumeLink: String,
 
-  jobDetails : String,
+  jobDetails: String,
+  jobId: String,
+  applicantId: String,
+  applicantDetails: String,
+
+  status: String,
 });
 
 const EmployeeJobApplicationModel = mongoose.model(

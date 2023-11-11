@@ -12,7 +12,9 @@ app.use(cors());
 const UserModel = require("./src/models/user.model");
 const JobModel = require("./src/models/job.model");
 const EmployerModel = require("./src/models/employer.model");
+const EmployeeModel = require("./src/models/employee.model");
 const EmployeeJobApplicationModel = require("./src/models/employeeJobApplication.model");
+const AppliedJobsModel = require("./src/models/appliedJobs.model");
 
 mongoose.connect("mongodb+srv://test:123@cluster0.3hhy1wv.mongodb.net/jobnest");
 
@@ -96,6 +98,69 @@ app.post("/create_employee_job_application", upload.none(), (req, res) => {
   const data = req.body;
   console.log(data);
   EmployeeJobApplicationModel.create(data)
+    .then((response) =>
+      AppliedJobsModel.updateOne(
+        { userId: data.applicantId },
+        { $addToSet: { jobIds: data.jobId } },
+        { upsert: true }
+      )
+    )
+    .then((response) => res.json(response))
+    .catch((err) => res.json(err));
+});
+
+app.get("/check_job_applied", (req, res) => {
+  const data = req.query;
+  console.log(data);
+  AppliedJobsModel.findOne({
+    userId: data.userId,
+    jobIds: { $elemMatch: { $eq: data.jobId } },
+  })
+    .then((result) => {
+      if (result) {
+        res.json({ jobApplied: true });
+      } else {
+        res.json({ jobApplied: false });
+      }
+    })
+    .catch((err) => {
+      res.json(err);
+    });
+});
+
+app.get("/get_employee_job_applications", (req, res) => {
+  const data = req.query;
+  console.log(data);
+  EmployeeJobApplicationModel.find({ applicantId: data.applicantId })
+    .then((response) => res.json(response))
+    .catch((err) => res.json(err));
+});
+
+app.post("/post_employee_details", upload.none(), (req, res) => {
+  const data = req.body;
+  console.log(data);
+  EmployeeModel.create(data)
+    .then((response) => res.json(response))
+    .catch((err) => res.json(err));
+});
+
+app.get("/get_employee_details", (req, res) => {
+  const data = req.query;
+  console.log(data);
+  if (!data.userId || !data) {
+    res.json({ status: false, message: "UserId not supplied", data: null });
+  } else {
+    EmployeeModel.findOne({ userId: data.userId })
+      .then((response) =>
+        res.json({ status: true, message: "Success", data: response })
+      )
+      .catch((err) => res.json(err));
+  }
+});
+
+app.put("/update_employee_details", upload.none(), (req, res) => {
+  const data = req.body;
+  EmployeeModel.findOneAndUpdate({ userId: data.userId }, { $set: data })
     .then((response) => res.json(response))
     .catch((err) => res.json(err));
 });
