@@ -102,6 +102,13 @@ app.put("/update_employer_details", upload.none(), (req, res) => {
     .catch((err) => res.json(err));
 });
 
+app.put("/update_employee_details", upload.none(), (req, res) => {
+  const data = req.body;
+  EmployeeModel.findOneAndUpdate({ userId: data.userId }, { $set: data })
+    .then((response) => res.json(response))
+    .catch((err) => res.json(err));
+});
+
 app.post("/create_employee_job_application", upload.none(), (req, res) => {
   const data = req.body;
   console.log(data);
