@@ -60,9 +60,17 @@ app.post("/post_job", upload.none(), (req, res) => {
 });
 
 app.get("/get_jobs", (req, res) => {
-  JobModel.find({})
-    .then((jobs) => res.json(jobs))
-    .catch((err) => res.json(err));
+  const data = req.query;
+  console.log(data);
+  if (data.createdBySomeEmployer) {
+    JobModel.find({ employerId: data.employerId })
+      .then((response) => res.json(response))
+      .catch((err) => res.json(err));
+  } else {
+    JobModel.find({})
+      .then((jobs) => res.json(jobs))
+      .catch((err) => res.json(err));
+  }
 });
 
 app.post("/post_employer_details", upload.none(), (req, res) => {
