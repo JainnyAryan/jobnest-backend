@@ -145,15 +145,25 @@ app.get("/check_job_applied", (req, res) => {
 
 app.get("/get_employee_job_applications", (req, res) => {
   const data = req.query;
-  console.log(data);
-  EmployeeJobApplicationModel.find({ applicantId: data.applicantId })
-    .then((response) => res.json(response))
-    .catch((err) => res.json(err));
+  if (data.ofPatricularJob) {
+    console.log("yayayyyy");
+    EmployeeJobApplicationModel.find({ jobId: data.jobId })
+      .then((response) => {
+        res.json(response);
+        console.log(response);
+      })
+      .catch((err) => res.json(err));
+  } else {
+    EmployeeJobApplicationModel.find({ applicantId: data.applicantId })
+      .then((response) => res.json(response))
+      .catch((err) => res.json(err));
+  }
 });
 
 app.post("/post_employee_details", upload.none(), (req, res) => {
   const data = req.body;
   console.log(data);
+
   EmployeeModel.create(data)
     .then((response) => res.json(response))
     .catch((err) => res.json(err));
