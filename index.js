@@ -190,6 +190,17 @@ app.put("/update_employee_details", upload.none(), (req, res) => {
     .catch((err) => res.json(err));
 });
 
+app.put("/update_status", (req, res) => {
+  const data = req.body;
+  console.log(data);
+  EmployeeJobApplicationModel.findByIdAndUpdate(
+    { _id: data.applicationId },
+    { $set: { status: data.status } }
+  )
+    .then((response) => res.json(response))
+    .catch((err) => res.json(err));
+});
+
 app.listen(3001, () => {
   console.log("Server is running at 3001");
 });

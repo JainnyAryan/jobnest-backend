@@ -29,6 +29,7 @@ const EmployeeJobApplicationModelSchema = new mongoose.Schema({
   jobId: String,
   applicantId: String,
   applicantDetails: String,
+  applicationDateTime: String,
 
   status: String,
 });
