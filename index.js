@@ -146,7 +146,7 @@ app.get("/check_job_applied", (req, res) => {
 app.get("/get_employee_job_applications", (req, res) => {
   const data = req.query;
   if (data.ofPatricularJob) {
-    console.log("yayayyyy");
+    // console.log("yayayyyy");
     EmployeeJobApplicationModel.find({ jobId: data.jobId })
       .then((response) => {
         res.json(response);
@@ -198,6 +198,18 @@ app.put("/update_status", (req, res) => {
     { $set: { status: data.status } }
   )
     .then((response) => res.json(response))
+    .catch((err) => res.json(err));
+});
+
+app.delete("/delete_job", (req, res) => {
+  const data = req.query;
+  console.log(data);
+  JobModel.findOneAndDelete({ _id: data.jobId })
+    .then((_) => EmployeeJobApplicationModel.deleteMany({ jobId: data.jobId }))
+    .then((_) =>
+      AppliedJobsModel.updateMany({}, { $pull: { jobIds: data.jobId } })
+    )
+    .then((r) => res.json(r))
     .catch((err) => res.json(err));
 });
 
