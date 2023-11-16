@@ -9,12 +9,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 
-const UserModel = require("../src/models/user.model");
-const JobModel = require("../src/models/job.model");
-const EmployerModel = require("../src/models/employer.model");
-const EmployeeModel = require("../src/models/employee.model");
-const EmployeeJobApplicationModel = require("../src/models/employeeJobApplication.model");
-const AppliedJobsModel = require("../src/models/appliedJobs.model");
+const UserModel = require("./src/models/user.model");
+const JobModel = require("./src/models/job.model");
+const EmployerModel = require("./src/models/employer.model");
+const EmployeeModel = require("./src/models/employee.model");
+const EmployeeJobApplicationModel = require("./src/models/employeeJobApplication.model");
+const AppliedJobsModel = require("./src/models/appliedJobs.model");
 
 mongoose.connect("mongodb+srv://test:123@cluster0.3hhy1wv.mongodb.net/jobnest");
 
@@ -217,7 +217,7 @@ app.delete("/delete_job", (req, res) => {
     .catch((err) => res.json(err));
 });
 
-app.listen(3001, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log("Server is running at 3001");
 });
 
