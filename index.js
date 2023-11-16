@@ -24,7 +24,7 @@ db.on("error", () => console.log("Error occurred"));
 
 
 app.get("/", (req, res) => {
-  res.json("Hello World");
+  res.send("Hello World");
 })
 
 app.post("/register", (req, res) => {
