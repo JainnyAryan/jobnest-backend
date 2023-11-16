@@ -9,12 +9,12 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.use(cors());
 
-const UserModel = require("./src/models/user.model");
-const JobModel = require("./src/models/job.model");
-const EmployerModel = require("./src/models/employer.model");
-const EmployeeModel = require("./src/models/employee.model");
-const EmployeeJobApplicationModel = require("./src/models/employeeJobApplication.model");
-const AppliedJobsModel = require("./src/models/appliedJobs.model");
+const UserModel = require("../src/models/user.model");
+const JobModel = require("../src/models/job.model");
+const EmployerModel = require("../src/models/employer.model");
+const EmployeeModel = require("../src/models/employee.model");
+const EmployeeJobApplicationModel = require("../src/models/employeeJobApplication.model");
+const AppliedJobsModel = require("../src/models/appliedJobs.model");
 
 mongoose.connect("mongodb+srv://test:123@cluster0.3hhy1wv.mongodb.net/jobnest");
 
@@ -22,10 +22,9 @@ var db = mongoose.connection;
 db.on("open", () => console.log("Connected to DB"));
 db.on("error", () => console.log("Error occurred"));
 
-
 app.get("/", (req, res) => {
   res.send("Hello World");
-})
+});
 
 app.post("/register", (req, res) => {
   UserModel.create(req.body)
@@ -221,3 +220,5 @@ app.delete("/delete_job", (req, res) => {
 app.listen(3001, () => {
   console.log("Server is running at 3001");
 });
+
+module.exports = app;
