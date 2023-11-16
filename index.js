@@ -217,7 +217,7 @@ app.delete("/delete_job", (req, res) => {
     .catch((err) => res.json(err));
 });
 
-app.listen(process.env.PORT || 3000, () => {
+app.listen(process.env.PORT || 3001, () => {
   console.log("Server is running at 3001");
 });
 
