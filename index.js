@@ -22,6 +22,11 @@ var db = mongoose.connection;
 db.on("open", () => console.log("Connected to DB"));
 db.on("error", () => console.log("Error occurred"));
 
+
+app.get("/", (req, res) => {
+  res.json("Hello World");
+})
+
 app.post("/register", (req, res) => {
   UserModel.create(req.body)
     .then((register) => res.json(register))
