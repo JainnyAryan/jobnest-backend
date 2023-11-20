@@ -56,6 +56,7 @@ app.post("/login", (req, res) => {
     .then((user) => {
       if (user) {
         if (user.password === data.password) {
+          delete user.password;
           res.json({ status: true, message: "success", data: user });
         } else {
           res.json({
