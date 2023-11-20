@@ -32,6 +32,22 @@ app.post("/register", (req, res) => {
     .catch((err) => res.json(err));
 });
 
+app.post("/find_email_username", (req, res) =>{
+  const data = req.body;
+  UserModel.findOne({
+    $or: [{ email: data.email }, { username: data.username }],
+  })
+  .then((user)=>{
+    if(user){
+      res.json({ status: true, message: "User already exists", data: user });
+    }
+    else{
+      res.json({ status: false, message: "does not exist", data: user });
+    }
+  })
+  .catch((err) => res.json(err));
+});
+
 app.post("/login", (req, res) => {
   const data = req.body;
   UserModel.findOne({
