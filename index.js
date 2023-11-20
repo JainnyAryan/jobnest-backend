@@ -26,11 +26,57 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-app.post("/register", (req, res) => {
-  UserModel.create(req.body)
-    .then((register) => res.json(register))
-    .catch((err) => res.json(err));
+// ... (existing code)
+
+app.post("/check-username", (req, res) => {
+  const { username } = req.body;
+  UserModel.findOne({ username })
+    .then((user) => {
+      const isAvailable = !user;
+      res.json({ available: isAvailable });
+    })
+    .catch((err) => res.json({ available: false, error: err.message }));
 });
+
+app.post("/check-email", (req, res) => {
+  const { email } = req.body;
+  UserModel.findOne({ email })
+    .then((user) => {
+      const isAvailable = !user;
+      res.json({ available: isAvailable });
+    })
+    .catch((err) => res.json({ available: false, error: err.message }));
+});
+
+app.post("/register", async (req, res) => {
+  const data = req.body;
+
+  try {
+    const isUsernameAvailable = await checkAvailability("username", data.username);
+    const isEmailAvailable = await checkAvailability("email", data.email);
+
+    if (isUsernameAvailable && isEmailAvailable) {
+      const newUser = await UserModel.create(data);
+      res.json(newUser);
+    } else {
+      res.json({
+        status: false,
+        message: "Username or Email already taken",
+        data: null,
+      });
+    }
+  } catch (err) {
+    res.json({
+      status: false,
+      message: "Error occurred while registering",
+      data: null,
+      error: err.message,
+    });
+  }
+});
+
+// ... (existing code)
+
 
 app.post("/login", (req, res) => {
   const data = req.body;
