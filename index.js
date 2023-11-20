@@ -26,8 +26,6 @@ app.get("/", (req, res) => {
   res.send("Hello World");
 });
 
-// ... (existing code)
-
 app.post("/check-username", (req, res) => {
   const { username } = req.body;
   UserModel.findOne({ username })
@@ -74,9 +72,6 @@ app.post("/register", async (req, res) => {
     });
   }
 });
-
-// ... (existing code)
-
 
 app.post("/login", (req, res) => {
   const data = req.body;
