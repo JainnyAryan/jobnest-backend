@@ -128,7 +128,6 @@ app.post("/post_employer_details", upload.none(), (req, res) => {
 
 app.get("/get_employer_details", (req, res) => {
   const data = req.query;
-  console.log(data);
   if (!data.userId) {
     res.json({ status: false, message: "UserId not supplied", data: null });
   } else {
@@ -136,7 +135,7 @@ app.get("/get_employer_details", (req, res) => {
       .then((response) =>
         res.json({ status: true, message: "Success", data: response })
       )
-      .catch((err) => res.json(err));
+      .catch((err) => res.json({ status: false, message: err.message, data: null }));
   }
 });
 
@@ -215,7 +214,6 @@ app.post("/post_employee_details", upload.none(), (req, res) => {
 
 app.get("/get_employee_details", (req, res) => {
   const data = req.query;
-  console.log(data);
   if (!data.userId) {
     res.json({ status: false, message: "UserId not supplied", data: null });
   } else {
@@ -223,7 +221,7 @@ app.get("/get_employee_details", (req, res) => {
       .then((response) =>
         res.json({ status: true, message: "Success", data: response })
       )
-      .catch((err) => res.json(err));
+      .catch((err) => res.json({ status: false, message: err.message, data: null }));
   }
 });
 
