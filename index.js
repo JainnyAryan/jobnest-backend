@@ -38,11 +38,11 @@ app.post("/find_email_username", (req, res) =>{
     $or: [{ email: data.email }, { username: data.username }],
   })
   .then((user)=>{
-    if(user){
+    if(user.email === data.email || user.username === data.username){
       res.json({ status: true, message: "User already exists", data: user });
     }
     else{
-      res.json({ status: false, message: "does not exist", data: user });
+      res.json({ status: false, message: "does not exist", data: null });
     }
   })
   .catch((err) => res.json(err));
