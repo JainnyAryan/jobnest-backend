@@ -129,7 +129,7 @@ app.post("/post_employer_details", upload.none(), (req, res) => {
 app.get("/get_employer_details", (req, res) => {
   const data = req.query;
   console.log(data);
-  if (!data.userId || !data) {
+  if (!data.userId) {
     res.json({ status: false, message: "UserId not supplied", data: null });
   } else {
     EmployerModel.findOne({ userId: data.userId })
@@ -191,7 +191,6 @@ app.get("/check_job_applied", (req, res) => {
 app.get("/get_employee_job_applications", (req, res) => {
   const data = req.query;
   if (data.ofPatricularJob) {
-    // console.log("yayayyyy");
     EmployeeJobApplicationModel.find({ jobId: data.jobId })
       .then((response) => {
         res.json(response);
@@ -217,7 +216,7 @@ app.post("/post_employee_details", upload.none(), (req, res) => {
 app.get("/get_employee_details", (req, res) => {
   const data = req.query;
   console.log(data);
-  if (!data.userId || !data) {
+  if (!data.userId) {
     res.json({ status: false, message: "UserId not supplied", data: null });
   } else {
     EmployeeModel.findOne({ userId: data.userId })
